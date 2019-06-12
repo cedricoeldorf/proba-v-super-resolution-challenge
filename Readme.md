@@ -74,6 +74,7 @@ It was decided not to pursue the GAN as they are notoriously unstable to train a
 For our experiments, three selected architectures are tested against the baseline bilinear interpolation method.
 
 ![](assets/Readme-6f77b051.jpg)
+
 * Our testing data is comprised of 20% of the data set
 
   (NOTE: Submissions to the competition have been closed, thus scoring/ranking on the leaderboard is not possible)
@@ -88,6 +89,7 @@ In the below figure a sample from the testing data used to make predictions with
 Looking closer at the zoomed in section of the image, both the FSRCNN and the CFSM models produced smoother edges compared to bicubic interpolation.
 
 Additionally, both models bottomed-out at a similar MSE level, graphed in the below figure.
+
 ![](assets/Readme-a370de14.png)
 
 ## Conclusion
