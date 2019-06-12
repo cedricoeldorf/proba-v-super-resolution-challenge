@@ -50,28 +50,30 @@ class Model(object):
 
   def init_model(self):
 
+    # Set placeholders for train vs test
     if self.train:
         self.images = tf.placeholder(tf.float32, [None, self.image_size, self.image_size, 1], name='images')
         self.labels = tf.placeholder(tf.float32, [None, self.label_size, self.label_size, 1], name='labels')
     else:
         self.images = tf.placeholder(tf.float32, [None, None, None, 1], name='images')
         self.labels = tf.placeholder(tf.float32, [None, None, None, 1], name='labels')
+
     # Batch size differs in training vs testing
     self.batch = tf.placeholder(tf.int32, shape=[], name='batch')
 
+    # import modelling script depending on flag
     model = importlib.import_module(self.arch)
     self.model = model.Model(self)
-
     self.pred = self.model.model()
-
     model_dir = "%s_%s_%s_%s" % (self.model.name.lower(), self.label_size, '-'.join(str(i) for i in self.model.model_params), "r"+str(self.radius))
     self.model_dir = os.path.join(self.checkpoint_dir, model_dir)
-
     self.loss = self.model.loss(self.labels, self.pred)
-
     self.saver = tf.train.Saver()
 
+
   def run(self):
+    """ Script for initializing training/testing process """
+
     global_step = tf.Variable(0, trainable=False)
     optimizer = tf.train.AdamOptimizer(self.learning_rate)
     deconv_mult = lambda grads: list(map(lambda x: (x[0] * 1.0, x[1]) if 'deconv' in x[1].name else x, grads))
@@ -80,21 +82,23 @@ class Model(object):
 
     tf.global_variables_initializer().run()
 
+    # Load previous model checkpoints if exists
     if self.load():
       print(" [*] Load SUCCESS")
     else:
       print(" [!] Load failed...")
 
-
     if self.params:
       save_params(self.sess, self.model.model_params)
     elif self.train:
+      # Train and test run sequentially
       self.run_train()
       self.run_test()
     else:
       self.run_test()
 
   def run_train(self):
+
     start_time = time.time()
     print("Beginning training setup...")
     if self.threads == 1:
@@ -104,6 +108,7 @@ class Model(object):
 
     print("Training...")
     start_time = time.time()
+    # Calculate average MSE to see improvement
     start_average, end_average, counter = 0, 0, 0
 
     for ep in range(self.epoch):
@@ -153,6 +158,8 @@ class Model(object):
 
   def run_test(self):
     print("[INFO] Testing . . .")
+
+    # NOTE only outputting 15 test examples
     for k in range(0, 15):
       np.random.seed(k)
       test_data, test_label = test_input_setup(self, np.random.randint(0,200))
