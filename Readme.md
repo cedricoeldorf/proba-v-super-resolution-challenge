@@ -103,7 +103,7 @@ For our experiments, three selected architectures are tested against the baselin
 
 ## Results
 
-In the below figure a sample from the testing data used to make predictions with the chosen models and bicubic interpolation. Whilst all methods produced acceptable results, the two models did not significantly outperform the bicubic interpolation.
+In the below figure a sample from the testing data used to make predictions with the chosen models and bicubic interpolation. 
 
 ![](assets/Readme-da5760b9.png)
 
