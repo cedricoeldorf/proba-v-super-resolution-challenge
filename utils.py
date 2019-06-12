@@ -12,16 +12,23 @@ from multiprocessing import Pool, Lock, active_children
 import pickle
 FLAGS = tf.app.flags.FLAGS
 
+
 def single_image_mse(number):
+    # BICUBIC INTERPOLATIONS MSE
     import joblib
     import cv2
-    img1 = joblib.load('./x_test_hr.pickle')[number]
-    img2 = joblib.load('./lr.pickle')['x_test_lr'][number]
-    img2 = cv2.resize(img2,(384,384), interpolation = cv2.INTER_CUBIC)
+    hr = joblib.load('./x_test_hr.pickle')
+    lr = joblib.load('./lr.pickle')['x_test_lr']
+    mse_all= []
+    for img1,img2 in zip(lr,hr):
 
-    mse = np.sum((img1.astype("float") - img2.astype("float")) ** 2)
-    mse /= float(img1.shape[0] * img1.shape[1])
-    return mse
+        img1 = cv2.resize(img1,(384,384), interpolation = cv2.INTER_CUBIC)
+
+        mse = np.sum((np.abs(img2.astype("float") - img1.astype("float"))) ** 2)
+        mse /= float(img2.shape[0] * img2.shape[1])
+        mse_all.append(mse)
+    print("MSE BICUBIC: ", np.mean(mse_all))
+    return np.mean(mse_all)
 
 def train_input_setup(config):
   """
@@ -65,6 +72,31 @@ def train_input_setup(config):
 
   return (arrdata, arrlabel)
 
+def mse_models(config):
+    with open('lr.pickle', 'rb') as pickle_in:
+      lr = pickle.load(pickle_in)
+
+    x_test_hr = joblib.load('x_test_hr.pickle')
+    x_test_lr = lr["x_test_lr"]
+    del lr
+
+    all = []
+    for input_, label_ in zip(x_test_lr, x_test_hr):
+
+        if len(input_.shape) == 3:
+          h, w, _ = input_.shape
+        else:
+          h, w = input_.shape
+
+        arrdata = input_.reshape([1, h, w, 1])
+        if len(label_.shape) == 3:
+          h, w, _ = label_.shape
+        else:
+          h, w = label_.shape
+
+        arrlabel = label_.reshape([1, h, w, 1])
+        all.append((arrdata, arrlabel))
+    return all
 
 def test_input_setup(config, number):
 

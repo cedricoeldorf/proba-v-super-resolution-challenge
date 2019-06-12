@@ -3,7 +3,9 @@ from utils import (
   train_input_setup,
   test_input_setup,
   save_params,
-  array_image_save
+  array_image_save,
+  mse_models
+
 )
 
 import time
@@ -193,6 +195,21 @@ class Model(object):
       ax3 = fig.add_subplot(133); ax3.imshow(result.reshape(384,384)); ax3.axis('off'); ax3.set_title('Predicted')
 
       plt.savefig('./result/' + str(k) + '_test.png')
+
+      # Calculate Test MSE
+    all = mse_models(self)
+    mse_all = []
+    for img in all:
+        test_data = img[0]
+        test_label = img[1]
+        result = np.clip(self.pred.eval({self.images: test_data, self.labels: test_label, self.batch: 1}), 0, 1)
+        result = result.reshape(384,384)
+        test_label = test_label.reshape(384,384)
+        mse = np.sum((np.abs(result.astype("float") - test_label.astype("float"))) ** 2)
+        mse /= float(result.shape[0] * result.shape[1])
+        mse_all.append(mse)
+    print("##########################")
+    print("MSE IS: ", np.mean(mse_all))
 
   def save(self, step):
     model_name = self.model.name + ".model"

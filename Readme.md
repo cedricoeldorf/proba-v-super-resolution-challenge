@@ -109,15 +109,19 @@ In the below figure a sample from the testing data used to make predictions with
 
 Looking closer at the zoomed in section of the image, both the FSRCNN and the CFSM models produced smoother edges compared to bicubic interpolation.
 
-Additionally, both models bottomed-out at a similar MSE level, graphed in the below figure.
+We could measure the performance of the different techniques by calculating the mean squared error (MSE) of the test set for every model. The MSE can be interpreted as how close a resolved image is to its high resolution partner.
 
-![](assets/Readme-a370de14.png)
+![](assets/Readme-0b6d2f80.png)
+
+We see that both models outperformed bicubic sampling. This is a very positive result as beating bicubic sampling was the aim of the Proba-V challenge.
 
 ## Conclusion
 
-Whilst the two models tested with the proposed data preprocessing technique did not achieve state-of-the-art results, the insight gained from these experiments can support future experiments in improving super resolved Proba-V images.
+Our models both performed well in comparison to bicubic sampling and the insight gained from these experiments can support future experiments in improving super resolved Proba-V images.
 
-* The fact that both models performed similarly could indicate that there are troubles learning the relation between the low and high resolution pairs. A possible test might be to [register](https://arxiv.org/pdf/1809.11130.pdf) the lr/hr pairs with one another in order to be certain that the pairs are aligned.
+* It seems that the long-term information flow of the CSFM model benefits the problem domain. Further investigation into the effects of skip connection and model depth would be interesting.
+
+* Our approach did not account for sub-pixel shifts. A possible experiment might be to [register](https://arxiv.org/pdf/1809.11130.pdf) the lr/hr pairs with one another in order to be certain that the low and high resolution pairs are perfectly aligned. This could potentially ease learning.
 
 * Additionally, we used single-image super resolution methods, however, this problem actually calls for a multi-image approach. [The first paper that ever tackled multi-image SR with deep neural networks was published in March 2019 and achieves state-of-the-art results.](https://arxiv.org/abs/1903.00440) This would be an interesting approach to the Proba-V challenge, as it is one of the rare cases in which we actually have multiple images for a single scene at our disposal.
 
