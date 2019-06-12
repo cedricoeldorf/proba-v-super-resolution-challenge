@@ -12,6 +12,17 @@ from multiprocessing import Pool, Lock, active_children
 import pickle
 FLAGS = tf.app.flags.FLAGS
 
+def single_image_mse(number):
+    import joblib
+    import cv2
+    img1 = joblib.load('./x_test_hr.pickle')[number]
+    img2 = joblib.load('./lr.pickle')['x_test_lr'][number]
+    img2 = cv2.resize(img2,(384,384), interpolation = cv2.INTER_CUBIC)
+
+    mse = np.sum((img1.astype("float") - img2.astype("float")) ** 2)
+    mse /= float(img1.shape[0] * img1.shape[1])
+    return mse
+
 def train_input_setup(config):
   """
   Read image files, make their sub-images, and save them as a h5 file format.
