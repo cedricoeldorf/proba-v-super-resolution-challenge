@@ -5,6 +5,7 @@ import tensorflow as tf
 class Model(object):
 
   def __init__(self, config):
+    print("[INFO] Training CSFM")
     self.name = "CSFM"
     self.model_params = [8, 2, 4]
     self.scale = config.scale

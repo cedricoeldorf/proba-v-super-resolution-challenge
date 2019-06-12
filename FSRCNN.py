@@ -6,8 +6,9 @@ from utils import tf_ssim
 class Model(object):
 
   def __init__(self, config):
+    print("[INFO] Training CSFM")
     self.name = "FSRCNN"
-    # Different model layer counts and filter sizes for FSRCNN vs FSRCNN-s (fast), (d, s, m) in paper
+
     model_params = [32, 0, 4, 1]
     self.model_params = model_params
     self.scale = config.scale
@@ -17,7 +18,7 @@ class Model(object):
     self.batch = config.batch
     self.image_size = config.image_size - self.padding
     self.label_size = config.label_size
-    #print("CALCULATED IMAGE SIZE ", self.image_size)
+
   def model(self):
 
     d, s, m, r = self.model_params

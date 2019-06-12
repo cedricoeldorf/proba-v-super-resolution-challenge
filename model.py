@@ -3,7 +3,6 @@ from utils import (
   train_input_setup,
   test_input_setup,
   save_params,
-  merge,
   array_image_save
 )
 
@@ -50,6 +49,7 @@ class Model(object):
 
 
   def init_model(self):
+
     if self.train:
         self.images = tf.placeholder(tf.float32, [None, self.image_size, self.image_size, 1], name='images')
         self.labels = tf.placeholder(tf.float32, [None, self.label_size, self.label_size, 1], name='labels')
@@ -85,10 +85,12 @@ class Model(object):
     else:
       print(" [!] Load failed...")
 
+
     if self.params:
       save_params(self.sess, self.model.model_params)
     elif self.train:
       self.run_train()
+      self.run_test()
     else:
       self.run_test()
 
@@ -150,7 +152,7 @@ class Model(object):
 
 
   def run_test(self):
-
+    print("[INFO] Testing . . .")
     for k in range(0, 15):
       np.random.seed(k)
       test_data, test_label = test_input_setup(self, np.random.randint(0,200))

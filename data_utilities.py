@@ -6,7 +6,6 @@ from glob import glob
 from zipfile import ZipFile
 import pickle
 import numpy as np
-import skimage
 import cv2
 from urllib.request import urlretrieve
 from zipfile import ZipFile
@@ -15,7 +14,7 @@ from zipfile import ZipFile
 ''' Preprocessing script; run before modeling '''
 DATA_PATH = './probav_data/'
 visualize = False
-download = True
+download = False
 single_scene = True
 
 ''' Variables above:
@@ -35,7 +34,7 @@ single_scene = True
 
 def first_process(DATA_PATH, visualize = False, download = True, single_scene = True):
 
-    if download = True:
+    if download == True:
         urlretrieve('https://kelvins.esa.int/media/competitions/proba-v-super-resolution/probav_data.zip',
                 filename='probav_data.zip')
         ZipFile('probav_data.zip').extractall('probav_data/')
@@ -56,6 +55,7 @@ def first_process(DATA_PATH, visualize = False, download = True, single_scene = 
     for scene in train:
         print(i)
         scene_path = scene + "/"
+        print(scene_path)
         h = cv2.imread(scene_path + 'HR.png',0)
 
         images = []
@@ -172,5 +172,5 @@ def prepare_and_normalize():
     del x_test_hr
 
 
-first_process()
+first_process(DATA_PATH, visualize, download, single_scene)
 prepare_and_normalize()

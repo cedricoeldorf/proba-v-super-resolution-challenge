@@ -132,14 +132,23 @@ It essentially involves slowly growing the resolution of a GAN. This allows the 
 
    'python3 data_utilities.py' can be run and will download + prepare the data for you.
 
+   Any customisation thereof can be done through variables defined at the bottom of the script.
+
 2. Modelling script
 
    Run 'python3 main.py' to train your model.
+
+   After training is complete, testing output will automatically be saved. Intermediate graphs will be saved to ./plots/ whilst testing results will be saved to ./result/
 
    Following arguments are important:
 
    * --arch: Specifies model type ["FSRCNN" or "CSFM"]
    * --train: True if train and False if testing
    * --epoch: the number of iterations to train
+   * --learning_rate: LR for Adam optimizer
+   * --batch_size: default is 32
 
-Intermediate graphs will be saved to ./plots/ whilst testing results will be saved to ./result/
+#### References:
+* [Embiggen module](https://github.com/lfsimoes/probav) was released by a participant of the proba-v challenge to help the data process. We use it for importing the data paths.
+* https://github.com/igv/FSRCNN-TensorFlow/blob/master/FSRCNN.py
+* https://github.com/igv/FSRCNN-TensorFlow/blob/master/CSFM.py
