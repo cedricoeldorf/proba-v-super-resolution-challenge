@@ -82,6 +82,7 @@ For the experiment we opt for the following two models:
   ![](assets/Readme-710462ac.png)
 
   Namely a filter, a non-linear mapping and then reconstruction.
+  
 2. **Channel-Wise and Spatial Feature Modulation network (CSFM)**
 
   The second architecture is more complex and makes use of special ["FMM" modules](https://arxiv.org/pdf/1809.11130.pdf) for improved feature extraction and [skip connections](https://towardsdatascience.com/residual-blocks-building-blocks-of-resnet-fd90ca15d6ec), which help carry spatial information to later layers. This information often gets lost when a CNN is deep.
