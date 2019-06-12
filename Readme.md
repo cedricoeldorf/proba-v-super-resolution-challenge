@@ -1,7 +1,7 @@
 # Proba-V Super Resolution Challenge
 ##### Submission Report for Incubit Technical Assignment
 
-The following report outlines the given problem, tackles data preprocessing, model selection and presents results. Its conclusion holds ideas for continued future work on the project.
+The following report outlines the given problem, tackles data preprocessing, model selection and presents results. I'd like to draw special attention to the conclusion, which holds two interesting approaches that weren't tackled in these experiments due to time constraint.
 
 ## Problem Statement
 Proba-V refers to the earth observation satellite that actively maps land cover and, more specifically, vegetation growth.
@@ -77,11 +77,11 @@ For the experiment we opt for the following two models:
 
 1. **Fast Super Resolution CNN  (FSRCNN)**
 
-  Although still widely in use, this is a relatively simple and straight-forward network consisting only of three parts.
+  As Occam's Razor states, sometimes the simplest solution is the best. Although still widely in use, this is a relatively simple and straight-forward network consisting only of three parts.
 
   ![](assets/Readme-710462ac.png)
 
-  Namely a filter, a non-linear mapping and then reconstruction.
+  Namely a filter, a non-linear mapping and then reconstruction. It was decided to start-off with this simpler model and then work our way up to more complex models once the problem is better understood.
 
 2. **Channel-Wise and Spatial Feature Modulation network (CSFM)**
 
@@ -92,7 +92,7 @@ These two models make an interesting comparison as their performance will tell u
 
 ### Experimental Setup
 
-For our experiments, three selected architectures are tested against the baseline bilinear interpolation method.
+For our experiments, three selected architectures are tested against the baseline bicubic interpolation method.
 
 ![](assets/Readme-6f77b051.jpg)
 
@@ -119,13 +119,13 @@ Whilst the two models tested with the proposed data preprocessing technique did 
 
 * The fact that both models performed similarly could indicate that there are troubles learning the relation between the low and high resolution pairs. A possible test might be to [register](https://arxiv.org/pdf/1809.11130.pdf) the lr/hr pairs with one another in order to be certain that the pairs are aligned.
 
-* Additionally, we used single-image super resolution methods, however, this problem actually calls for a multi-image approach. [The first paper that ever tackled multi-image SR was published in March 2019 and achieves state-of-the-art results.](https://arxiv.org/abs/1903.00440) This would be an interesting approach to the Proba-V challenge, as it is one of the rare cases in which we actually have multiple images for a single scene at our disposal.
+* Additionally, we used single-image super resolution methods, however, this problem actually calls for a multi-image approach. [The first paper that ever tackled multi-image SR with deep neural networks was published in March 2019 and achieves state-of-the-art results.](https://arxiv.org/abs/1903.00440) This would be an interesting approach to the Proba-V challenge, as it is one of the rare cases in which we actually have multiple images for a single scene at our disposal.
 
-* A second interesting approach, which to my best knowledge has never been proposed, would have been using an extension on the SRGAN architecture by making use of [progressive training](https://arxiv.org/abs/1710.10196).
+* A second interesting approach, **which to my best knowledge has never been proposed**, would have been using an extension on the SRGAN architecture by making use of [progressive training](https://arxiv.org/abs/1710.10196).
 
 ![](assets/Readme-fd2b3ade.png)
 
-It essentially involves slowly growing the resolution of a GAN. This allows the model to first learn low level features, which eases the learning of high level features later on. This architecture could be translated into a super resolution problem.
+It essentially involves slowly growing the resolution of a GAN. This allows the model to first learn low level features, which eases the learning of high level features later on. This architecture could be translated into a super resolution problem and would make an incredibly exciting research topic.
 
 # Usage
 
