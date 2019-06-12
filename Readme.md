@@ -82,7 +82,7 @@ For the experiment we opt for the following two models:
   ![](assets/Readme-710462ac.png)
 
   Namely a filter, a non-linear mapping and then reconstruction.
-  
+
 2. **Channel-Wise and Spatial Feature Modulation network (CSFM)**
 
   The second architecture is more complex and makes use of special ["FMM" modules](https://arxiv.org/pdf/1809.11130.pdf) for improved feature extraction and [skip connections](https://towardsdatascience.com/residual-blocks-building-blocks-of-resnet-fd90ca15d6ec), which help carry spatial information to later layers. This information often gets lost when a CNN is deep.
@@ -117,11 +117,11 @@ Additionally, both models bottomed-out at a similar MSE level, graphed in the be
 
 Whilst the two models tested with the proposed data preprocessing technique did not achieve state-of-the-art results, the insight gained from these experiments can support future experiments in improving super resolved Proba-V images.
 
-The fact that both models performed similarly could indicate that there are troubles learning the relation between the low and high resolution pairs. A possible test might be to [register](https://arxiv.org/pdf/1809.11130.pdf) the lr/hr pairs with one another in order to be certain that the pairs are aligned.
+* The fact that both models performed similarly could indicate that there are troubles learning the relation between the low and high resolution pairs. A possible test might be to [register](https://arxiv.org/pdf/1809.11130.pdf) the lr/hr pairs with one another in order to be certain that the pairs are aligned.
 
-Additionally, we used single-image super resolution methods, however, this problem actually calls for a multi-image approach. [The first paper that ever tackled multi-image SR was published in March 2019 and achieves state-of-the-art results.](https://arxiv.org/abs/1903.00440) This would be an interesting approach to the Proba-V challenge, as it is one of the rare cases in which we actually have multiple images for a single scene at our disposal.
+* Additionally, we used single-image super resolution methods, however, this problem actually calls for a multi-image approach. [The first paper that ever tackled multi-image SR was published in March 2019 and achieves state-of-the-art results.](https://arxiv.org/abs/1903.00440) This would be an interesting approach to the Proba-V challenge, as it is one of the rare cases in which we actually have multiple images for a single scene at our disposal.
 
-A second interesting approach, which to my best knowledge has never been proposed, would have been using an extension on the SRGAN architecture by making use of [progressive training](https://arxiv.org/abs/1710.10196).
+* A second interesting approach, which to my best knowledge has never been proposed, would have been using an extension on the SRGAN architecture by making use of [progressive training](https://arxiv.org/abs/1710.10196).
 
 ![](assets/Readme-fd2b3ade.png)
 
